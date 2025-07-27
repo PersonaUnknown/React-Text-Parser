@@ -16,9 +16,34 @@ export const headerRegex = /^(?!\t)^(\s{0,3})\#{1,6}\s[^\n]+/gm;
 export const blockquoteRegex = /^(?!\t)^(\s{0,3})\>\s?[^\n]+/gm;
 
 /**
+ * Regex that checks for an unordered list
+ *   - Able to include tabs and spaces at front (just no non-space characters)
+ *   - Detectable list element via +, -, and *
+ */
+export const unorderedListRegex = /^[ \t]*[\+\-\*] [^\n]+/gm;
+
+/**
+ * Regex that checks for an ordered list
+ *   - Able to include tabs and spaces at front (jsut no non-space characters)
+ *   - Detectable list element via format -> EX: 1. 2. 3. etc.
+ */
+export const orderedListRegex = /^[ \t]*[\d]{1,9}. [^\n]+/gm;
+
+/**
+ * Regex that checks for a link
+ *   -
+ *   -
+ */
+export const linkRegex = /\([^\(\)]+\)\[[^\[\]]+\]/gm; 
+// const emphasisRegex = "/\*{2}[^\*]+\*{2}|\_{2}[^\_]+\_{2}/g";
+// const italicRegex = "/\*{1}[^\*]+\*{1}|\_{1}[^\_]+\_{1}/g";
+
+/**
  * Mapping of regular expressions to find specific block structures / inline element
  */
 export const regexMap: Map<string, RegExp> = new Map([
     ["header", headerRegex],
-    ["blockquote", blockquoteRegex]
+    ["blockquote", blockquoteRegex],
+    ["unorderedlist", unorderedListRegex],
+    ["orderedlist", orderedListRegex]
 ]);
