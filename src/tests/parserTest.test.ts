@@ -1,4 +1,16 @@
 import { expect, test } from "vitest";
+import { parseSpecialLineOfText } from "../utils/parser";
+
+test("parse special text effect", () => {
+    const text = "*This is italic text*"; // 1 1
+    const text2 = "**This is italic text**"; // 2 2
+    const text3 = "*This is **italic text**"; // 1 2 2
+    const text4 = "****hj***";
+    parseSpecialLineOfText(text);
+    parseSpecialLineOfText(text2);
+    parseSpecialLineOfText(text3);
+    // expect(basicHeaderTest).toStrictEqual(expectedBasicHeaderOutput);
+});
 
 // # This is a Heading h1      --> <h1>This is a Heading h1</h1>
 // ## This is a Heading h2     --> <h2>This is a Heading h2</h2>
@@ -242,7 +254,7 @@ const parseLinesOfText = (text: string[]) => {
     for (const line of text) {
         if (line !== "") {
             const parsedLine = parseLineOfText(line, index++);
-            console.log(parsedLine);
+            // console.log(parsedLine);
         }
     }
 }

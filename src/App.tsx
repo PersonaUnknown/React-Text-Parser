@@ -3,16 +3,6 @@ import './App.css'
 
 function App() {
   // Setup
-  // const baseParagraphData = [
-  //   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-  //   "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud",
-  //   "exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  //   "",
-  //   "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat",
-  //   "nulla pariatur.",
-  //   "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit",
-  //   "anim id est laborum."
-  // ];
   const baseParagraphData = [
     "# Markdown syntax guide",
     "",
@@ -26,11 +16,17 @@ function App() {
     "",
     "## Emphasis",
     "*This text will be italic*",  
-    "_This will also be italic_"
+    "_This will also be italic_",
+    "## Links",
+    "Example of link: [Google](https://google.com/)",
+    "## Blockquotes",
+    "> Markdown is a lightweight markup language with plain-text-formatting syntax, created in 2004 by John Gruber with Aaron Swartz",
+    ">",
+    ">>> Markdown is often used to format readme files, for writing messages in online discussion forums, and to create rich text using a plain text editor."
   ]
   // Render
   return (
-    <div className="container flex mx-auto p-6">
+    <div className="container flex flex-col mx-auto p-6">
       <Parser 
         className="flex flex-col mx-auto"
         content={baseParagraphData} 

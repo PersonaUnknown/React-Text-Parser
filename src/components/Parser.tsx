@@ -1,4 +1,6 @@
 import { parseLinesOfText } from "../utils/parser";
+import Blockquote from "./ui/BlockQuote";
+import Em from "./ui/Em";
 import H1 from "./ui/H1";
 import H2 from "./ui/H2";
 import H3 from "./ui/H3";
@@ -6,6 +8,8 @@ import H4 from "./ui/H4";
 import H5 from "./ui/H5";
 import H6 from "./ui/H6";
 import P from "./ui/P";
+import Strong from "./ui/Strong";
+
 const Parser = ({
     className="",
     content

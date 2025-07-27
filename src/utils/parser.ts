@@ -72,29 +72,33 @@ const parseLineOfText = (text: string, index = 0): MarkdownText => {
 
     let determinedContainerType = false;
     for (const character of text) {
-        if (character === "#") {
-            if (determinedContainerType) {
-                currContent += character;
-            } else {
-                currSpecialCharacters += character;
-            }
-        } else if (character === " ") {
-            if (!determinedContainerType && specialSyntax.has(currSpecialCharacters)) {
-                determinedContainerType = true;
-                const determinedContainer = containerMap.get(currSpecialCharacters);
-                if (determinedContainer) {
-                    currContainer = determinedContainer;
+        switch (character) {
+            case "#":
+                if (determinedContainerType) {
+                    currContent += character;
+                } else {
+                    currSpecialCharacters += character;
                 }
-            } else {
+                break;
+            case " ":
+                if (!determinedContainerType && specialSyntax.has(currSpecialCharacters)) {
+                    determinedContainerType = true;
+                    const determinedContainer = containerMap.get(currSpecialCharacters);
+                    if (determinedContainer) {
+                        currContainer = determinedContainer;
+                    }
+                } else {
+                    currContent += character;
+                }
+                break;
+            default:
+                if (!determinedContainerType) {
+                    determinedContainerType = true;
+                    currContainer = "P";
+                    currContent += currSpecialCharacters;
+                }
                 currContent += character;
-            }
-        } else {
-            if (!determinedContainerType) {
-                determinedContainerType = true;
-                currContainer = "P";
-                currContent += currSpecialCharacters;
-            }
-            currContent += character;
+                break;
         }
     }
 
@@ -106,6 +110,49 @@ const parseLineOfText = (text: string, index = 0): MarkdownText => {
         id: `${currContainer}-${index}`,
         container: currContainer,
         content: currContent
+    }
+}
+
+/**
+ * Parses a line of text for special text effects (bold, italic, etc.)
+ * @param line line of text needed to be parsed
+ * Italics: Contain text within * characters. * must be adjacent to a non-space character.
+ */
+export const parseSpecialLineOfText = (line: string) => {
+    const text = [];
+    let currContent = "";
+    let tempContent = "";
+    let isSpecText = false;
+    let specialCharContent = "";
+    const specialCharacters: Set<string> = new Set<string>([
+        "*",
+        "_"
+    ]);
+    const charIndices: Map<string, number[]> = new Map([
+        ["*", []],
+        ["_", []],
+    ]);
+
+    for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        // const indices = charIndices.get(char);
+        // if (indices) {
+        //     indices.push(i);
+        //     charIndices.set(char, indices);
+        // }
+
+        // if (specialCharacters.has(char)) {
+        //     isSpecText = true;
+        // }
+
+        if (char === "*") {
+            isSpecText = true;
+            tempContent += char;
+        } else {
+            if (isSpecText) {
+                specialCharContent += char;
+            }
+        }
     }
 }
 
